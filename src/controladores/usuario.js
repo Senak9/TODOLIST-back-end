@@ -40,3 +40,6 @@ const cadastrarUsuario = async (req, res) => {
     return res.status(500).json({ mensagem: `Erro interno: ${error.message}` });
   }
 };
+module.exports = {
+  cadastrarUsuario,
+};

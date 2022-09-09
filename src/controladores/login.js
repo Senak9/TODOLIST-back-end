@@ -3,22 +3,24 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const login = async () => {
-  const { email, senha } = req.body;
+  const { nome, senha } = req.body;
 
-  if (!email || !senha) {
-    return res.status(400).json({ mensagem: "Email e senha são obrigatórios" });
+  if (!nome || !senha) {
+    return res
+      .status(400)
+      .json({ mensagem: "Usuario e senha são obrigatórios" });
   }
 
   try {
     const { rowCount, rows } = await query(
       "select * from usuarios where email = $1",
-      [email]
+      [nome]
     );
 
     if (rowCount <= 0) {
       return res
         .status(400)
-        .json({ mensagem: "Email ou senha estão incorretas" });
+        .json({ mensagem: "Usuario ou senha estão incorretas" });
     }
 
     const [usuario] = rows;
@@ -28,7 +30,7 @@ const login = async () => {
     if (!senhaCorreta) {
       return res
         .status(400)
-        .json({ mensagem: "Email ou senha estão incorretas" });
+        .json({ mensagem: "nome ou senha estão incorretas" });
     }
 
     const token = jwt.sign({ id: usuario.id }, "senhaSeguraParaToken", {
